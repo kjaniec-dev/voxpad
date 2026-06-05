@@ -19,7 +19,7 @@ function parseKey(k: string): VoxelKey {
   return { x, y, z }
 }
 
-const PALETTE = [
+const DEFAULT_PALETTE = [
   '#e63946', '#f4a261', '#e9c46a', '#2a9d8f',
   '#457b9d', '#a8dadc', '#f1faee', '#264653',
   '#8338ec', '#fb5607', '#ffbe0b', '#3a86ff',
@@ -56,14 +56,15 @@ interface VoxelState {
   setTool: (t: Tool) => void
   setColor: (c: string) => void
   addToPalette: (c: string) => void
+  removeFromPalette: (c: string) => void
   clear: () => void
 }
 
 export const useVoxelStore = create<VoxelState>((set, get) => ({
   voxels: buildInitialVoxels(),
   tool: 'add',
-  color: PALETTE[0],
-  palette: PALETTE,
+  color: DEFAULT_PALETTE[0],
+  palette: DEFAULT_PALETTE,
 
   addVoxel: (x, y, z) =>
     set((s) => {
@@ -95,7 +96,17 @@ export const useVoxelStore = create<VoxelState>((set, get) => ({
       palette: s.palette.includes(c) ? s.palette : [...s.palette, c],
     })),
 
+  removeFromPalette: (c) =>
+    set((s) => {
+      if (DEFAULT_PALETTE.includes(c)) return s
+      const palette = s.palette.filter((savedColor) => savedColor !== c)
+      return {
+        palette,
+        color: s.color === c ? DEFAULT_PALETTE[0] : s.color,
+      }
+    }),
+
   clear: () => set({ voxels: new Map() }),
 }))
 
-export { key, parseKey }
+export { key, parseKey, DEFAULT_PALETTE }

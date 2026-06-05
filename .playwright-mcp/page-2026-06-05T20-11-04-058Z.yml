@@ -1,0 +1,48 @@
+- generic [ref=e3]:
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]: V
+      - generic [ref=e10]: VoxPad
+    - tablist "Voxel tool" [ref=e11]:
+      - tab "1 Add" [selected] [ref=e12] [cursor=pointer]
+      - tab "2 Remove" [ref=e13] [cursor=pointer]
+      - tab "3 Paint" [ref=e14] [cursor=pointer]
+    - generic [ref=e16]:
+      - button "glTF" [ref=e17] [cursor=pointer]
+      - button ".vox" [ref=e18] [cursor=pointer]
+    - generic [ref=e20]:
+      - generic [ref=e21]: 70 voxels
+      - button "Clear" [ref=e22] [cursor=pointer]
+  - generic [ref=e23]:
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Palette
+        - heading "Active color" [level=3] [ref=e27]
+      - generic [ref=e28] [cursor=pointer]:
+        - text: Custom
+        - textbox "Choose custom color" [ref=e29]: "#e63946"
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - generic "Click to open color picker" [ref=e32] [cursor=pointer]:
+          - textbox "Choose active color" [ref=e33]: "#e63946"
+        - generic [ref=e34]:
+          - generic [ref=e35]: "#e63946"
+          - generic [ref=e36]: Saved in palette
+      - generic [ref=e37]:
+        - 'button "Select color #e63946" [ref=e39] [cursor=pointer]'
+        - 'button "Select color #f4a261" [ref=e41] [cursor=pointer]'
+        - 'button "Select color #e9c46a" [ref=e43] [cursor=pointer]'
+        - 'button "Select color #2a9d8f" [ref=e45] [cursor=pointer]'
+        - 'button "Select color #457b9d" [ref=e47] [cursor=pointer]'
+        - 'button "Select color #a8dadc" [ref=e49] [cursor=pointer]'
+        - 'button "Select color #f1faee" [ref=e51] [cursor=pointer]'
+        - 'button "Select color #264653" [ref=e53] [cursor=pointer]'
+        - 'button "Select color #8338ec" [ref=e55] [cursor=pointer]'
+        - 'button "Select color #fb5607" [ref=e57] [cursor=pointer]'
+        - 'button "Select color #ffbe0b" [ref=e59] [cursor=pointer]'
+        - 'button "Select color #3a86ff" [ref=e61] [cursor=pointer]'
+        - 'button "Select color #06d6a0" [ref=e63] [cursor=pointer]'
+        - 'button "Select color #ef476f" [ref=e65] [cursor=pointer]'
+        - 'button "Select color #ffd166" [ref=e67] [cursor=pointer]'
+        - 'button "Select color #118ab2" [ref=e69] [cursor=pointer]'
+  - generic: Click a voxel face to place • 1 Add • 2 Remove • 3 Paint • Right-drag to rotate • Middle-drag to pan

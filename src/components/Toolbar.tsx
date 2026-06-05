@@ -1,11 +1,15 @@
+import { Badge } from '@kjaniec-dev/ui'
 import { useVoxelStore, Tool } from '../store/voxelStore'
 import { exportGLTF, exportVox } from '../utils/export'
 
-const TOOLS: { id: Tool; label: string; icon: string; hint: string }[] = [
-  { id: 'add',    label: 'Add',    icon: '＋', hint: 'Left-click face to add voxel' },
-  { id: 'remove', label: 'Remove', icon: '－', hint: 'Left-click voxel to remove' },
-  { id: 'paint',  label: 'Paint',  icon: '◈',  hint: 'Left-click voxel to repaint' },
+const TOOLS: { value: Tool; label: string }[] = [
+  { value: 'add', label: 'Add' },
+  { value: 'remove', label: 'Remove' },
+  { value: 'paint', label: 'Paint' },
 ]
+
+const commandButton =
+  'grid h-10 w-24 place-items-center rounded-kj-sm px-4 text-[0.78rem] font-bold leading-none transition-colors'
 
 export default function Toolbar() {
   const tool = useVoxelStore((s) => s.tool)
@@ -14,46 +18,69 @@ export default function Toolbar() {
   const clear = useVoxelStore((s) => s.clear)
 
   return (
-    <div style={styles.toolbar}>
-      {/* Logo */}
-      <span style={styles.logo}>VoxPad</span>
-
-      {/* Tool buttons */}
-      <div style={styles.group}>
-        {TOOLS.map((t) => (
-          <button
-            key={t.id}
-            title={t.hint}
-            onClick={() => setTool(t.id)}
-            style={{ ...styles.btn, ...(tool === t.id ? styles.btnActive : {}) }}
-          >
-            <span style={styles.icon}>{t.icon}</span>
-            <span style={styles.label}>{t.label}</span>
-          </button>
-        ))}
+    <div className="absolute left-4 right-4 top-4 z-[100] flex flex-wrap items-center justify-between gap-x-5 gap-y-3 rounded-kj-sm border border-border bg-card/95 px-6 py-4 shadow-kj-lg backdrop-blur-xl">
+      <div className="flex h-10 items-center gap-3 pr-1">
+        <span className="grid h-8 w-8 place-items-center rounded-kj-sm bg-primary text-sm font-black text-primary-foreground shadow-kj-glow">
+          V
+        </span>
+        <span className="text-sm font-black tracking-[0.08em] text-foreground">VoxPad</span>
       </div>
 
-      <div style={styles.sep} />
+      <div className="grid grid-cols-3 rounded-kj-sm border border-border bg-muted/55 p-1.5" role="group" aria-label="Voxel tool">
+        {TOOLS.map((item, index) => {
+          const active = item.value === tool
 
-      {/* Export */}
-      <div style={styles.group}>
-        <button style={styles.btn} title="Export glTF (.glb)" onClick={() => exportGLTF(voxels)}>
-          <span style={styles.icon}>⬇</span>
-          <span style={styles.label}>glTF</span>
-        </button>
-        <button style={styles.btn} title="Export MagicaVoxel (.vox)" onClick={() => exportVox(voxels)}>
-          <span style={styles.icon}>⬇</span>
-          <span style={styles.label}>.vox</span>
-        </button>
+          return (
+            <button
+              key={item.value}
+              type="button"
+              aria-pressed={active}
+              className={`${commandButton} ${
+                active
+                  ? 'bg-primary text-primary-foreground shadow-kj-glow'
+                  : 'text-muted-foreground hover:bg-surface hover:text-foreground'
+              }`}
+              onClick={() => setTool(item.value)}
+            >
+              <span className="flex items-center gap-2">
+                <span className={active ? 'text-primary-foreground/70' : 'text-muted-foreground/70'}>
+                  {index + 1}
+                </span>
+                {item.label}
+              </span>
+            </button>
+          )
+        })}
       </div>
 
-      <div style={styles.sep} />
+      <div className="hidden h-8 w-px bg-border lg:block" />
 
-      {/* Voxel count + clear */}
-      <div style={styles.group}>
-        <span style={styles.count}>{voxels.size} voxels</span>
+      <div className="flex items-center gap-3">
         <button
-          style={{ ...styles.btn, ...styles.danger }}
+          type="button"
+          className={`${commandButton} bg-secondary text-secondary-foreground shadow-kj-sm hover:bg-secondary-hover`}
+          title="Export glTF (.glb)"
+          onClick={() => exportGLTF(voxels)}
+        >
+          glTF
+        </button>
+        <button
+          type="button"
+          className={`${commandButton} border border-border bg-surface/70 text-foreground shadow-kj-sm hover:bg-muted`}
+          title="Export MagicaVoxel (.vox)"
+          onClick={() => exportVox(voxels)}
+        >
+          .vox
+        </button>
+      </div>
+
+      <div className="hidden h-8 w-px bg-border lg:block" />
+
+      <div className="flex h-10 items-center gap-3">
+        <Badge variant="neutral">{voxels.size} voxels</Badge>
+        <button
+          type="button"
+          className={`${commandButton} bg-danger text-white shadow-kj-sm hover:bg-danger/90`}
           onClick={() => { if (confirm('Clear all voxels?')) clear() }}
         >
           Clear
@@ -61,73 +88,4 @@ export default function Toolbar() {
       </div>
     </div>
   )
-}
-
-const styles: Record<string, React.CSSProperties> = {
-  toolbar: {
-    position: 'absolute',
-    top: 12,
-    left: '50%',
-    transform: 'translateX(-50%)',
-    display: 'flex',
-    alignItems: 'center',
-    gap: 8,
-    background: 'rgba(15,15,26,0.88)',
-    backdropFilter: 'blur(12px)',
-    border: '1px solid rgba(255,255,255,0.08)',
-    borderRadius: 12,
-    padding: '6px 14px',
-    zIndex: 100,
-    userSelect: 'none',
-    whiteSpace: 'nowrap',
-  },
-  logo: {
-    color: '#7c6fe0',
-    fontFamily: 'system-ui, sans-serif',
-    fontWeight: 700,
-    fontSize: 15,
-    letterSpacing: 1,
-    marginRight: 4,
-  },
-  group: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 4,
-  },
-  sep: {
-    width: 1,
-    height: 24,
-    background: 'rgba(255,255,255,0.1)',
-  },
-  btn: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 4,
-    background: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: 7,
-    color: '#ccc',
-    cursor: 'pointer',
-    padding: '4px 10px',
-    fontSize: 12,
-    fontFamily: 'system-ui, sans-serif',
-    transition: 'background 0.15s',
-  },
-  btnActive: {
-    background: 'rgba(124,111,224,0.35)',
-    border: '1px solid rgba(124,111,224,0.6)',
-    color: '#d0c8ff',
-  },
-  danger: {
-    color: '#ff7070',
-    border: '1px solid rgba(255,80,80,0.25)',
-  },
-  icon: { fontSize: 13 },
-  label: { fontSize: 12 },
-  count: {
-    color: '#556',
-    fontSize: 11,
-    fontFamily: 'monospace',
-    marginRight: 4,
-  },
 }

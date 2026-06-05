@@ -9,6 +9,7 @@ export default function Scene() {
       shadows
       camera={{ position: [12, 10, 16], fov: 50, near: 0.1, far: 1000 }}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
+      onContextMenu={(event) => event.preventDefault()}
       style={{ width: '100%', height: '100%' }}
     >
       <color attach="background" args={['#0f0f1a']} />
@@ -48,8 +49,8 @@ export default function Scene() {
         maxPolarAngle={Math.PI / 2 - 0.05}
         mouseButtons={{
           LEFT: undefined as unknown as import('three').MOUSE,
-          MIDDLE: 0 as import('three').MOUSE,
-          RIGHT: 2 as import('three').MOUSE,
+          MIDDLE: 2 as import('three').MOUSE,
+          RIGHT: 0 as import('three').MOUSE,
         }}
       />
     </Canvas>

@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "@kjaniec-dev/design/tailwind.css";
+@import "@kjaniec-dev/ui/ui.css";
+
+@source "./**/*.{ts,tsx}";
+@source "../node_modules/@kjaniec-dev/ui/dist/**/*.{js,cjs,mjs}";
+@source "/Users/kjaniec-dev/dev/projects/kj-product-kit-starter/packages/ui/dist/**/*.{js,cjs,mjs}";
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}

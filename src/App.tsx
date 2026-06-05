@@ -2,14 +2,16 @@ import Scene from './components/Scene'
 import Toolbar from './components/Toolbar'
 import Palette from './components/Palette'
 import HelpHint from './components/HelpHint'
+import KeyboardShortcuts from './components/KeyboardShortcuts'
 
 export default function App() {
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
+    <div className="relative h-screen w-screen overflow-hidden bg-background text-foreground">
       <Scene />
       <Toolbar />
       <Palette />
       <HelpHint />
+      <KeyboardShortcuts />
     </div>
   )
 }
