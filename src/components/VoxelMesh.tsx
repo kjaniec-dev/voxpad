@@ -29,6 +29,7 @@ export default function VoxelMesh() {
 
   const handlePointer = useCallback(
     (e: ThreeEvent<PointerEvent>) => {
+      if (e.button !== 0) return
       e.stopPropagation()
       const face = e.face
       if (!face) return

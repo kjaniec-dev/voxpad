@@ -11,6 +11,14 @@ test('camera uses right-drag for rotation and middle-drag for panning', () => {
   assert.match(scene, /RIGHT:\s*0\s+as import\('three'\)\.MOUSE/)
 })
 
+test('voxel edit tools ignore non-left pointer buttons', () => {
+  const ground = read('src/components/Ground.tsx')
+  const voxelMesh = read('src/components/VoxelMesh.tsx')
+
+  assert.match(ground, /if\s*\(e\.button !== 0\)\s*return[\s\S]*?if\s*\(tool !== 'add'\)\s*return/)
+  assert.match(voxelMesh, /if\s*\(e\.button !== 0\)\s*return[\s\S]*?e\.stopPropagation\(\)/)
+})
+
 test('app wires keyboard shortcuts for tool selection', () => {
   const app = read('src/App.tsx')
 

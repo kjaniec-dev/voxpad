@@ -6,6 +6,7 @@ export default function Ground() {
   const addVoxel = useVoxelStore((s) => s.addVoxel)
 
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
+    if (e.button !== 0) return
     if (tool !== 'add') return
     e.stopPropagation()
     const x = Math.floor(e.point.x + 0.5)
