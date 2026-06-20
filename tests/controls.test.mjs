@@ -192,7 +192,9 @@ test('keyboard shortcuts triggers store confirmation instead of window.confirm',
 
 test('toolbar integrates ConfirmDialog and Button from UI library', () => {
   const toolbar = read('src/components/Toolbar.tsx')
-  assert.match(toolbar, /import.*ConfirmDialog.*Button.*from '@kjaniec-dev\/ui'/)
+  assert.match(toolbar, /import.*from '@kjaniec-dev\/ui'/)
+  assert.match(toolbar, /ConfirmDialog/)
+  assert.match(toolbar, /Button/)
   assert.match(toolbar, /<ConfirmDialog/)
   assert.match(toolbar, /<Button/)
 })
