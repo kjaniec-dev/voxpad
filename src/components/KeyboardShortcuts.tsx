@@ -15,7 +15,7 @@ function shouldIgnoreShortcut(target: EventTarget | null) {
 
 export default function KeyboardShortcuts() {
   const setTool = useVoxelStore((s) => s.setTool)
-  const clear = useVoxelStore((s) => s.clear)
+  const setClearConfirmOpen = useVoxelStore((s) => s.setClearConfirmOpen)
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -28,15 +28,16 @@ export default function KeyboardShortcuts() {
         return
       }
 
-      if (event.key.toLowerCase() === 'c' && window.confirm('Clear all voxels?')) {
+      if (event.key.toLowerCase() === 'c') {
         event.preventDefault()
-        clear()
+        setClearConfirmOpen(true)
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [clear, setTool])
+  }, [setTool, setClearConfirmOpen])
 
   return null
 }
+

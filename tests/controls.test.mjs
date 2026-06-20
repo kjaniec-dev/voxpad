@@ -184,3 +184,10 @@ test('store manages clear confirmation dialog state', () => {
   assert.match(store, /setClearConfirmOpen:\s*\(open:\s*boolean\)\s*=>\s*void/)
 })
 
+test('keyboard shortcuts triggers store confirmation instead of window.confirm', () => {
+  const shortcuts = read('src/components/KeyboardShortcuts.tsx')
+  assert.doesNotMatch(shortcuts, /window\.confirm/)
+  assert.match(shortcuts, /setClearConfirmOpen/)
+})
+
+
