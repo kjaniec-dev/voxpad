@@ -1,4 +1,4 @@
-import { Badge } from '@kjaniec-dev/ui'
+import { Badge, ConfirmDialog, Button } from '@kjaniec-dev/ui'
 import { useVoxelStore, Tool } from '../store/voxelStore'
 import { exportGLTF, exportVox } from '../utils/export'
 
@@ -16,6 +16,8 @@ export default function Toolbar() {
   const setTool = useVoxelStore((s) => s.setTool)
   const voxels = useVoxelStore((s) => s.voxels)
   const clear = useVoxelStore((s) => s.clear)
+  const isClearConfirmOpen = useVoxelStore((s) => s.isClearConfirmOpen)
+  const setClearConfirmOpen = useVoxelStore((s) => s.setClearConfirmOpen)
 
   return (
     <div className="absolute left-4 right-4 top-4 z-[100] flex flex-wrap items-center justify-between gap-x-5 gap-y-3 rounded-kj-sm border border-border bg-card/95 px-6 py-4 shadow-kj-lg backdrop-blur-xl">
@@ -56,36 +58,49 @@ export default function Toolbar() {
       <div className="hidden h-8 w-px bg-border lg:block" />
 
       <div className="flex items-center gap-3">
-        <button
-          type="button"
-          className={`${commandButton} bg-secondary text-secondary-foreground shadow-kj-sm hover:bg-secondary-hover`}
+        <Button
+          variant="secondary"
+          className="w-24 font-bold shadow-kj-sm"
           title="Export glTF (.glb)"
           onClick={() => exportGLTF(voxels)}
         >
           glTF
-        </button>
-        <button
-          type="button"
-          className={`${commandButton} border border-border bg-surface/70 text-foreground shadow-kj-sm hover:bg-muted`}
+        </Button>
+        <Button
+          variant="outline"
+          className="w-24 bg-surface/70 font-bold shadow-kj-sm"
           title="Export MagicaVoxel (.vox)"
           onClick={() => exportVox(voxels)}
         >
           .vox
-        </button>
+        </Button>
       </div>
 
       <div className="hidden h-8 w-px bg-border lg:block" />
 
       <div className="flex h-10 items-center gap-3">
         <Badge variant="neutral">{voxels.size} voxels</Badge>
-        <button
-          type="button"
-          className={`${commandButton} bg-danger text-white shadow-kj-sm hover:bg-danger/90`}
-          onClick={() => { if (confirm('Clear all voxels?')) clear() }}
+        <Button
+          variant="danger"
+          className="w-24 font-bold shadow-kj-sm"
+          onClick={() => setClearConfirmOpen(true)}
         >
           Clear
-        </button>
+        </Button>
       </div>
+
+      <ConfirmDialog
+        open={isClearConfirmOpen}
+        onClose={() => setClearConfirmOpen(false)}
+        onConfirm={() => {
+          clear()
+          setClearConfirmOpen(false)
+        }}
+        title="Clear all voxels?"
+        description="This action cannot be undone. You will lose all current voxel structures."
+        confirmLabel="Clear"
+        tone="danger"
+      />
     </div>
   )
 }
