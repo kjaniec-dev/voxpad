@@ -119,8 +119,8 @@ test('app chrome uses KJ UI kit components and styles', () => {
   assert.match(vite, /@tailwindcss\/vite/)
   assert.match(vite, /packages\/ui\/dist\/index\.js/)
   assert.match(vite, /useLocalUiDist/)
-  assert.equal(pkg.dependencies['@kjaniec-dev/ui'], '^0.4.0')
-  assert.equal(pkg.dependencies['@kjaniec-dev/design'], '^0.3.1')
+  assert.equal(pkg.dependencies['@kjaniec-dev/ui'], '^0.7.2')
+  assert.equal(pkg.dependencies['@kjaniec-dev/design'], '^0.7.2')
 })
 
 test('toolbar uses a rectangular command bar with primary active tools and even button sizing', () => {
