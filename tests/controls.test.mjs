@@ -177,3 +177,10 @@ test('styles delegate color tokens to KJ design Tailwind package', () => {
   assert.doesNotMatch(styles, /--kj-card:/)
   assert.doesNotMatch(styles, /--kj-ring:/)
 })
+
+test('store manages clear confirmation dialog state', () => {
+  const store = read('src/store/voxelStore.ts')
+  assert.match(store, /isClearConfirmOpen:\s*boolean/)
+  assert.match(store, /setClearConfirmOpen:\s*\(open:\s*boolean\)\s*=>\s*void/)
+})
+

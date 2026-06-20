@@ -58,6 +58,8 @@ interface VoxelState {
   addToPalette: (c: string) => void
   removeFromPalette: (c: string) => void
   clear: () => void
+  isClearConfirmOpen: boolean
+  setClearConfirmOpen: (open: boolean) => void
 }
 
 export const useVoxelStore = create<VoxelState>((set, get) => ({
@@ -107,6 +109,8 @@ export const useVoxelStore = create<VoxelState>((set, get) => ({
     }),
 
   clear: () => set({ voxels: new Map() }),
+  isClearConfirmOpen: false,
+  setClearConfirmOpen: (open) => set({ isClearConfirmOpen: open }),
 }))
 
 export { key, parseKey, DEFAULT_PALETTE }
